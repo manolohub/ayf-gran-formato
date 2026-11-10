@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <defs>
+    <linearGradient id="gradBrillante" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00a4e4" />
+      <stop offset="50%" stop-color="#0077b6" />
+      <stop offset="100%" stop-color="#023e8a" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" fill="#f0f7fc"/>
+  <ellipse cx="80" cy="100" rx="25" ry="50" fill="#005f73"/>
+  <ellipse cx="80" cy="100" rx="15" ry="30" fill="#0a9396"/>
+  <rect x="80" y="50" width="140" height="100" fill="url(#gradBrillante)"/>
+  <ellipse cx="220" cy="100" rx="25" ry="50" fill="#90e0ef"/>
+  <ellipse cx="220" cy="100" rx="15" ry="30" fill="#00b4d8"/>
+  <path d="M100 65 L180 65 L140 135 Z" fill="rgba(255,255,255,0.25)"/>
+  <text x="150" y="105" font-family="sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">VINILO BRILLANTE</text>
+  <text x="150" y="125" font-family="sans-serif" font-size="10" fill="#caf0f8" text-anchor="middle">Alta Intensidad de Color</text>
+</svg>

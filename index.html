@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AyF Gran Formato - Catálogo y Gestión</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <!-- Cabecera principal con un solo h1 y menú de navegación -->
+    <header class="cabecera cabecera-principal">
+        <div class="cabecera__marca logo-titulo">
+            <img src="img/loguito.svg" alt="Logo de AyF Gran Formato" class="cabecera__logo logo-empresa">
+            <h1 class="cabecera__titulo">AyF Gran Formato</h1>
+        </div>
+        <nav class="cabecera__nav navegacion-principal" aria-label="Menú de navegación principal">
+            <ul class="cabecera__lista">
+                <li><a href="#seccion-registro" class="cabecera__enlace">Registrar</a></li>
+                <li><a href="#seccion-catalogo" class="cabecera__enlace">Catálogo</a></li>
+                <li><a href="#seccion-tabla" class="cabecera__enlace">Tabla Resumen</a></li>
+                <li><a href="#seccion-api" class="cabecera__enlace">TRM (API)</a></li>
+                <li><a href="#seccion-contacto" class="cabecera__enlace">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenedor general que distribuye la barra lateral y el contenido principal -->
+    <div class="contenedor-sitio">
+
+        <!-- Barra lateral (aside) con filtros por categoría y resumen de datos -->
+        <aside class="barra-lateral" aria-label="Panel lateral de filtros y métricas">
+            <section class="panel-resumen">
+                <h2 class="panel-resumen__titulo">Resumen de Inventario</h2>
+                <div class="tarjetas-resumen">
+                    <article class="metrica">
+                        <span class="metrica__etiqueta metrica-etiqueta">Total de Registros:</span>
+                        <strong id="metrica-total-registros" class="metrica__valor metrica-valor">0</strong>
+                    </article>
+                    <article class="metrica">
+                        <span class="metrica__etiqueta metrica-etiqueta">Productos Agotados:</span>
+                        <strong id="metrica-agotados" class="metrica__valor metrica-valor">0</strong>
+                    </article>
+                    <article class="metrica">
+                        <span class="metrica__etiqueta metrica-etiqueta">Total de Unidades:</span>
+                        <strong id="metrica-total-unidades" class="metrica__valor metrica-valor">0</strong>
+                    </article>
+                    <article class="metrica">
+                        <span class="metrica__etiqueta metrica-etiqueta">Valor en Inventario:</span>
+                        <strong id="metrica-valor-inventario" class="metrica__valor metrica-valor">$0</strong>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel-filtros">
+                <h2 class="panel-filtros__titulo">Filtrar por Categoría</h2>
+                <div id="contenedor-botones-categorias" class="grupo-botones-categorias">
+                    <!-- Los botones de categorías se crean dinámicamente desde JavaScript -->
+                </div>
+            </section>
+
+            <section class="panel-acciones">
+                <button type="button" id="btn-restaurar-ejemplo" class="boton boton--reiniciar btn-reiniciar">Restaurar datos de ejemplo</button>
+            </section>
+        </aside>
+
+        <!-- Sección principal -->
+        <main class="contenido-principal">
+
+            <!-- Formulario para agregar o editar registros -->
+            <section id="seccion-registro" class="seccion-formulario">
+                <h2 class="seccion-formulario__titulo">Agregar Nuevo Producto</h2>
+                <form id="formulario-producto" class="formulario" novalidate>
+                    <div id="mensaje-error-registro" class="mensaje-estado mensaje-error oculto" role="alert"></div>
+                    <div id="mensaje-exito-registro" class="mensaje-estado mensaje-exito oculto" role="status"></div>
+
+                    <div class="formulario__campo campo-formulario">
+                        <label for="campo-nombre">Nombre del producto:</label>
+                        <input type="text" id="campo-nombre" placeholder="Ej: Pendón Roller 80x200">
+                    </div>
+
+                    <div class="formulario__fila fila-formulario">
+                        <div class="formulario__campo campo-formulario">
+                            <label for="campo-precio">Precio unitario ($ COP):</label>
+                            <input type="number" id="campo-precio" placeholder="Ej: 45000" min="1">
+                        </div>
+                        <div class="formulario__campo campo-formulario">
+                            <label for="campo-cantidad">Cantidad (Stock):</label>
+                            <input type="number" id="campo-cantidad" placeholder="Ej: 10" min="0">
+                        </div>
+                    </div>
+
+                    <div class="formulario__fila fila-formulario">
+                        <div class="formulario__campo campo-formulario">
+                            <label for="campo-categoria">Categoría:</label>
+                            <select id="campo-categoria">
+                                <option value="">Seleccione una categoría</option>
+                                <option value="Publicidad">Publicidad</option>
+                                <option value="Vinilos">Vinilos</option>
+                                <option value="Acabados">Acabados</option>
+                                <option value="Stickers">Stickers</option>
+                                <option value="Rigidos">Rigidos</option>
+                            </select>
+                        </div>
+                        <div class="formulario__campo campo-formulario">
+                            <label for="campo-imagen">Imagen de referencia:</label>
+                            <select id="campo-imagen">
+                                <option value="img/pendon.svg">Pendón Publicitario</option>
+                                <option value="img/vinilo-mate.svg">Vinilo Mate</option>
+                                <option value="img/vinilo-brillante.svg">Vinilo Brillante</option>
+                                <option value="img/laminado.svg">Laminado Mate</option>
+                                <option value="img/stickers.svg">Stickers Troquelados</option>
+                                <option value="img/acrilico.svg">Aviso Acrílico</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="formulario__acciones acciones-formulario">
+                        <button type="submit" id="btn-guardar-producto" class="boton boton--primario btn-primario">Agregar Registro</button>
+                        <button type="button" id="btn-cancelar" class="boton boton--secundario btn-secundario" hidden>Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Buscador y contador de productos -->
+            <section id="seccion-catalogo" class="seccion-catalogo">
+                <div class="cabecera-catalogo">
+                    <h2 class="seccion-catalogo__titulo">Catálogo de Productos</h2>
+                    <div class="barra-busqueda">
+                        <label for="input-buscador" class="etiqueta-oculta">Buscar productos</label>
+                        <input type="search" id="input-buscador" placeholder="Buscar por nombre o categoría...">
+                    </div>
+                </div>
+
+                <div class="info-busqueda">
+                    <p id="contador-resultados" class="contador-texto">Cargando productos...</p>
+                    <p id="aviso-sin-coincidencias" class="mensaje-vacio oculto">No hay productos que coincidan con la búsqueda actual.</p>
+                </div>
+
+                <!-- Contenedor de tarjetas vacío (lo llena JavaScript) -->
+                <div id="contenedor-tarjetas" class="grilla-tarjetas"></div>
+            </section>
+
+            <!-- Tabla con búsqueda, filtros combinados, ordenamiento por columna, paginación y exportación a CSV -->
+            <section id="seccion-tabla" class="seccion-tabla">
+                <div class="seccion-tabla__cabecera">
+                    <h2 class="seccion-tabla__titulo">Tabla de Registros</h2>
+                    <button type="button" id="btn-exportar-csv" class="boton boton--secundario btn-secundario">Exportar a CSV</button>
+                </div>
+
+                <!-- Controles de búsqueda y filtros combinados para la tabla -->
+                <div class="tabla-controles">
+                    <div class="formulario__campo campo-formulario tabla-controles__campo">
+                        <label for="input-buscador-tabla">Buscar en la tabla:</label>
+                        <input type="search" id="input-buscador-tabla" placeholder="Filtrar por nombre o categoría...">
+                    </div>
+
+                    <div class="formulario__campo campo-formulario tabla-controles__campo">
+                        <label for="filtro-categoria-tabla">Categoría:</label>
+                        <select id="filtro-categoria-tabla">
+                            <option value="Todas">Todas las categorías</option>
+                        </select>
+                    </div>
+
+                    <div class="formulario__campo campo-formulario tabla-controles__campo">
+                        <label for="filtro-estado-tabla">Estado de stock:</label>
+                        <select id="filtro-estado-tabla">
+                            <option value="todos">Todos los estados</option>
+                            <option value="disponibles">Solo disponibles</option>
+                            <option value="agotados">Solo agotados</option>
+                        </select>
+                    </div>
+
+                    <div class="formulario__campo campo-formulario tabla-controles__campo">
+                        <label for="select-filas-pagina">Filas por página:</label>
+                        <select id="select-filas-pagina">
+                            <option value="4" selected>4 por página</option>
+                            <option value="6">6 por página</option>
+                            <option value="10">10 por página</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p class="tabla-datos__ayuda">Haz clic en los encabezados con flecha (ID, Nombre, Categoría, Precio o Cantidad) para ordenar la tabla.</p>
+
+                <div class="envoltorio-tabla">
+                    <table class="tabla-datos">
+                        <thead id="encabezado-tabla" class="tabla-datos__encabezado">
+                            <tr>
+                                <th data-columna="id" data-titulo="ID" class="tabla-datos__th--ordenable">ID ▲</th>
+                                <th>Imagen</th>
+                                <th data-columna="nombre" data-titulo="Nombre" class="tabla-datos__th--ordenable">Nombre ↕</th>
+                                <th data-columna="categoria" data-titulo="Categoría" class="tabla-datos__th--ordenable">Categoría ↕</th>
+                                <th data-columna="precio" data-titulo="Precio" class="tabla-datos__th--ordenable">Precio ↕</th>
+                                <th data-columna="cantidad" data-titulo="Cantidad" class="tabla-datos__th--ordenable">Cantidad ↕</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <!-- Llenada dinámicamente desde JavaScript -->
+                        <tbody id="cuerpo-tabla-resumen"></tbody>
+                    </table>
+                </div>
+
+                <!-- Controles de paginación de la tabla -->
+                <div class="paginacion">
+                    <button type="button" id="btn-pagina-anterior" class="boton boton--secundario btn-secundario">Anterior</button>
+                    <span id="info-paginacion" class="paginacion__info">Página 1 de 1</span>
+                    <button type="button" id="btn-pagina-siguiente" class="boton boton--secundario btn-secundario">Siguiente</button>
+                </div>
+            </section>
+
+            <!-- Sección que consume la API pública de datos.gov.co -->
+            <section id="seccion-api" class="seccion-api panel-api">
+                <div class="panel-api__cabecera">
+                    <div>
+                        <h2 class="panel-api__titulo">Consulta de TRM Oficial (API datos.gov.co)</h2>
+                        <p class="panel-api__descripcion">
+                            Consultamos en tiempo real la Tasa Representativa del Mercado (dólar oficial en Colombia) desde el portal de Datos Abiertos del Estado (<strong>datos.gov.co</strong>) para calcular la referencia en dólares (USD) de nuestros insumos importados (vinilos, acrílicos y tintas) y cotizaciones internacionales.
+                        </p>
+                    </div>
+
+                    <div class="panel-api__controles">
+                        <div class="formulario__campo campo-formulario panel-api__selector">
+                            <label for="select-limite-api">Registros a consultar ($limit):</label>
+                            <select id="select-limite-api">
+                                <option value="5" selected>Últimos 5 registros</option>
+                                <option value="8">Últimos 8 registros</option>
+                                <option value="12">Últimos 12 registros</option>
+                            </select>
+                        </div>
+                        <button type="button" id="btn-consultar-api" class="boton boton--primario btn-primario">Actualizar TRM</button>
+                    </div>
+                </div>
+
+                <!-- Indicador de carga mientras responde la API -->
+                <p id="indicador-carga-api" class="panel-api__cargando oculto" role="status">
+                    Cargando datos oficiales de la TRM desde datos.gov.co...
+                </p>
+
+                <!-- Mensaje amable en caso de error de red o caída de la API -->
+                <div id="mensaje-error-api" class="mensaje-estado mensaje-error oculto" role="alert"></div>
+
+                <!-- Resultados transformados de la API -->
+                <div id="contenedor-resultados-api" class="panel-api__resultados oculto">
+                    <div class="panel-api__resumen">
+                        <article class="metrica panel-api__metrica">
+                            <span class="metrica__etiqueta metrica-etiqueta">TRM Oficial Vigente:</span>
+                            <strong id="api-trm-actual" class="metrica__valor metrica-valor">$0 COP</strong>
+                        </article>
+                        <article class="metrica panel-api__metrica">
+                            <span class="metrica__etiqueta metrica-etiqueta">Promedio del periodo (reduce):</span>
+                            <strong id="api-trm-promedio" class="metrica__valor metrica-valor">$0 COP</strong>
+                        </article>
+                    </div>
+
+                    <div class="panel-api__columnas">
+                        <div class="panel-api__bloque">
+                            <h3 class="panel-api__subtitulo">Historial reciente en datos.gov.co</h3>
+                            <div id="lista-historial-trm" class="panel-api__lista"></div>
+                        </div>
+
+                        <div class="panel-api__bloque">
+                            <h3 class="panel-api__subtitulo">Precios del catálogo en Dólares (USD)</h3>
+                            <div class="envoltorio-tabla">
+                                <table class="tabla-datos">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Categoría</th>
+                                            <th>Precio COP</th>
+                                            <th>Equivalente USD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpo-tabla-usd"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulario de contacto con validación nativa del navegador -->
+            <section id="seccion-contacto" class="seccion-contacto">
+                <h2 class="seccion-contacto__titulo">Formulario de Contacto</h2>
+                <form id="formulario-contacto" class="formulario">
+                    <div class="formulario__campo campo-formulario">
+                        <label for="contacto-nombre">Nombre completo:</label>
+                        <input type="text" id="contacto-nombre" name="nombre" required minlength="3" placeholder="Ingresa tu nombre completo">
+                    </div>
+
+                    <div class="formulario__campo campo-formulario">
+                        <label for="contacto-email">Correo electrónico:</label>
+                        <input type="email" id="contacto-email" name="email" required placeholder="correo@ejemplo.com">
+                    </div>
+
+                    <div class="formulario__campo campo-formulario">
+                        <label for="contacto-telefono">Teléfono celular:</label>
+                        <input type="tel" id="contacto-telefono" name="telefono" required pattern="[0-9]{7,10}" title="Número telefónico de 7 a 10 dígitos numéricos" placeholder="Ej: 3001234567">
+                    </div>
+
+                    <div class="formulario__campo campo-formulario">
+                        <label for="contacto-mensaje">Detalles de su pedido o consulta:</label>
+                        <textarea id="contacto-mensaje" name="mensaje" required minlength="10" placeholder="Describa brevemente lo que necesita..."></textarea>
+                    </div>
+
+                    <button type="submit" id="btn-enviar-contacto" class="boton boton--primario btn-primario">Enviar Mensaje</button>
+                    <div id="mensaje-exito-contacto" class="mensaje-estado mensaje-exito oculto" role="status"></div>
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="pie-pagina">
+        <div class="pie-pagina__contenido pie-contenido">
+            <address>Calle 53 # 53-76 Local 104, Medellín, Colombia</address>
+            <p>Teléfono: (604) 555-0192 | Correo: contacto@ayfgranformato.com</p>
+            <p>&copy; 2026 AyF Gran Formato. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- El orden de los scripts importa: modelo -> servicios -> vista -> controlador -> app -->
+    <script src="js/modelo/modelo.js"></script>
+    <script src="js/servicios/api.js"></script>
+    <script src="js/vista/vista.js"></script>
+    <script src="js/controlador/controlador.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <rect width="300" height="200" fill="#edf2f4"/>
+  <rect x="60" y="35" width="180" height="130" rx="6" fill="#8d99ae" opacity="0.2"/>
+  <rect x="55" y="30" width="180" height="130" rx="6" fill="#ffffff" stroke="#2b2d42" stroke-width="2"/>
+  <circle cx="70" cy="45" r="5" fill="#d90429"/>
+  <circle cx="220" cy="45" r="5" fill="#d90429"/>
+  <circle cx="70" cy="145" r="5" fill="#d90429"/>
+  <circle cx="220" cy="145" r="5" fill="#d90429"/>
+  <text x="145" y="90" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2b2d42" text-anchor="middle">AVISO ACRÍLICO</text>
+  <text x="145" y="115" font-family="sans-serif" font-size="10" fill="#8d99ae" text-anchor="middle">Con Distanciadores Metálicos</text>
+</svg>
