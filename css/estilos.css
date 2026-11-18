@@ -885,8 +885,9 @@ button:disabled {
     border: 1px solid #86efac;
 }
 
-/* Clase de utilidad para ocultar elementos */
-.oculto {
+/* Clase de utilidad y atributo hidden para ocultar elementos */
+.oculto,
+[hidden] {
     display: none !important;
 }
 
